@@ -94,3 +94,22 @@ fn start_flight() {
 
     hardware_join_handle.join().unwrap();
 }
+
+
+
+fn stall_flight() {
+    let logger = ModuleLogger::new("Main", None);
+
+    let (hardware_join_handle, pred_rx, update_rx, motor_tx, hardware_control_tx) =
+        initialize_hardware();
+    start_flight_controller(pred_rx, update_rx, motor_tx);
+
+
+    logger.log("Press enter to terminate.");
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+
+    hardware_control_tx.send(()).unwrap();
+
+    hardware_join_handle.join().unwrap();
+}

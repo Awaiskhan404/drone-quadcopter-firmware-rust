@@ -29,8 +29,7 @@ impl PID {
         }
     }
 
-    // Thank you to Jaeyoon Kim for helping formulate this PID
-    // Compute the torque to put on the quadcopter in order to fix the attitude
+
     fn compute_torque(&mut self, error: Vector3<f64>, angular_rate: Vector3<f64>) -> Vector3<f64> {
         let now = PreciseTime::now();
         let diff = self.last_update.to(now);
@@ -44,8 +43,7 @@ impl PID {
         torque
     }
 
-    // Output motor speeds to correct attitude
-    // Thank you to Jaeyoon Kim for helping formulate this PID
+
     pub fn control(
         &mut self,
         attitude: UnitQuaternion<f64>,
